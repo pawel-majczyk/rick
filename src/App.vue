@@ -33,16 +33,18 @@
     </header>
     <main class="main">
       <!-- content -->
+      <EpisodesList />
     </main>
   </div>
 </template>
 
 <script>
   import AppLogo from './assets/logo.svg';
+  import EpisodesList from './components/EpisodesList.vue';
 
   export default {
     components: {
-      AppLogo,
+      AppLogo, EpisodesList
     },
     data() {
       return {
