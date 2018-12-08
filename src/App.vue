@@ -7,11 +7,15 @@
       >
         <AppLogo />
       </a>
-      <button class="header__nav-trigger">
-        <!-- Hamburger Icon -->
+      <button class="header__nav-trigger" @click="toggleHamburgerMenu">
+        🍔
       </button>
-
-      <nav class="header__nav">
+      <nav
+        class="header__nav"
+        :class="{
+          'is-visible': isVisible
+        }"
+      >
         <!-- .is-visible -->
         <a
           class="header__nav-link"
@@ -27,7 +31,6 @@
         </a>
       </nav>
     </header>
-
     <main class="main">
       <!-- content -->
     </main>
@@ -40,6 +43,16 @@
   export default {
     components: {
       AppLogo,
+    },
+    data() {
+      return {
+        isVisible: false,
+      }
+    },
+    methods: {
+      toggleHamburgerMenu() {
+        this.isVisible = !this.isVisible;
+      }
     }
   }
 
@@ -52,5 +65,8 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   // color: #2c3e50;
+}
+.header__nav-trigger {
+  font-size: 2em;
 }
 </style>
