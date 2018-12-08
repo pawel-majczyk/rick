@@ -35,19 +35,17 @@
       </nav>
     </header>
     <main class="main">
-      <!-- content -->
-      <EpisodesList />
+      <router-view />
     </main>
   </div>
 </template>
 
 <script>
   import AppLogo from './assets/logo.svg';
-  import EpisodesList from './components/EpisodesList.vue';
 
   export default {
     components: {
-      AppLogo, EpisodesList
+      AppLogo
     },
     data() {
       return {
