@@ -21,7 +21,9 @@
         v-for="episode in episodes"
         :key="episode.id"
       >
-        <EpisodeItem :episode="episode" />
+        <RouterLink :to="{ name: 'episode', params: { id: episode.id, episode }}">
+          <EpisodeItem :episode="episode" />
+        </RouterLink>
       </li>
       <!-- ... -->
     </ul>

@@ -17,7 +17,8 @@ export default new Router({
     {
       path: '/episode/:id',
       name: 'episode',
-      component: EpisodeView
+      component: EpisodeView,
+      props: true,
     },
     // {
     //   path: '/about',

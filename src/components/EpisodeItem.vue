@@ -1,7 +1,7 @@
 <template>
   <div class="episode-item">
     <h3 class="episode-item__num">
-      Episode 1
+      {{ episodeBadge }}
     </h3>
     <h2 class="episode-item__name">
       {{ episode.name }}
@@ -37,6 +37,9 @@
       seasonBadge() {
         // const regexp = /S(\d+)E(\d+)/gm;
         return `Season: ${extractEpisodeNumber(this.episode.episode).seasonNumber}`
+      },
+      episodeBadge() {
+        return `Season: ${extractEpisodeNumber(this.episode.episode).episodeNumber}`
       }
     }
   }
