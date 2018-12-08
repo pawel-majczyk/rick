@@ -1,13 +1,19 @@
 <template>
-  <div>
+  <div
+    v-infinite-scroll="retrieveAPIData"
+    infinite-scroll-disabled="isInifiniteScrollDisabled"
+    infinite-scroll-distance="10"
+  >
     <h1 class="episodes__title">
       Episodes
     </h1>
     <div class="episodes__search">
       <!-- search icon -->
       <input
+        v-model="searchInput"
         type="text"
         placeholder="Search"
+        @input="runSearch"
       >
     </div>
     <ul class="episodes__list">
@@ -20,6 +26,7 @@
       <!-- ... -->
     </ul>
     <div
+      v-show="hasNextPage"
       class="episodes__loader"
     >
       Loading more
@@ -29,6 +36,9 @@
 
 <script>
 import EpisodeItem from './EpisodeItem.vue';
+import { setTimeout, clearTimeout } from 'timers';
+import debounce from 'lodash.debounce';
+
   export default {
     components: {
       EpisodeItem
@@ -37,27 +47,48 @@ import EpisodeItem from './EpisodeItem.vue';
       return {
         isFetchingData: true,
         episodes: [],
-        urlAPI: 'http://tiny-rick.tk/api/episode/',
-        nextPage: '',
+        urlAPI: 'http://tiny-rick.tk/api',
+        hasNextPage: true,
         currentPage: 0,
+        busy: false,
+        searchInput: '',
+      }
+    },
+    computed: {
+      isInifiniteScrollDisabled() {
+        return this.busy || !this.hasNextPage;
       }
     },
     created() {
-      this.retrieveAPIData(this.urlAPI);
+      this.retrieveAPIData(this.urlAPI + '/episode');
     },
     methods: {
-      retrieveAPIData(url) {
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          this.nextPage = data.info.next;
-          return data.results
-          })
-        .then(data => {
-          this.episodes = data;
-          this.isFetchingData = false
-        });
-      }
+      async retrieveAPIData() {
+        this.busy = true;
+        this.currentPage++
+
+        try {
+          const data = await fetch(`${this.urlAPI}/episode?page=${this.currentPage}&name=${this.searchInput}`)
+            .then(response => response.json());
+
+          if (data.info.pages === this.currentPage) {
+            this.hasNextPage = false;
+          }
+
+          this.episodes = this.episodes.concat(data.results);
+          this.isFetchingData = false;
+          this.busy = false;
+        }
+        catch(err) {
+          this.episodes = []
+        }
+      },
+      runSearch: debounce(function () {
+        this.episodes = [];
+        this.hasNextPage = true;
+        this.currentPage = 0;
+        this.retrieveAPIData();
+      }, 1000)
     }
   }
 </script>

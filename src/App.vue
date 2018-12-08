@@ -7,7 +7,10 @@
       >
         <AppLogo />
       </a>
-      <button class="header__nav-trigger" @click="toggleHamburgerMenu">
+      <button
+        class="header__nav-trigger"
+        @click="toggleHamburgerMenu"
+      >
         🍔
       </button>
       <nav
