@@ -36,7 +36,6 @@
 
 <script>
 import EpisodeItem from './EpisodeItem.vue';
-import { setTimeout, clearTimeout } from 'timers';
 import debounce from 'lodash.debounce';
 
   export default {
