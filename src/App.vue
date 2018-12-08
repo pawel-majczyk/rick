@@ -1,12 +1,49 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <header class="header">
+      <a
+        href="/"
+        class="header__logo"
+      >
+        <AppLogo />
+      </a>
+      <button class="header__nav-trigger">
+        <!-- Hamburger Icon -->
+      </button>
+
+      <nav class="header__nav">
+        <!-- .is-visible -->
+        <a
+          class="header__nav-link"
+          href="/"
+        >
+          Episodes
+        </a>
+        <a
+          class="header__nav-link"
+          href="/quiz"
+        >
+          Quiz
+        </a>
+      </nav>
+    </header>
+
+    <main class="main">
+      <!-- content -->
+    </main>
   </div>
 </template>
+
+<script>
+  import AppLogo from './assets/logo.svg';
+
+  export default {
+    components: {
+      AppLogo,
+    }
+  }
+
+</script>
 
 <style lang="scss">
 #app {
@@ -14,16 +51,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  // color: #2c3e50;
 }
 </style>
