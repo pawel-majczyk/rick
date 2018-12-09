@@ -1,19 +1,23 @@
 <template>
   <div id="app">
     <header class="header">
-      <a
-        href="/"
-        class="header__logo"
-      >
-        <AppLogo />
-      </a>
+      <RouterLink to="/">
+        <a
+          href="/"
+          class="header__logo"
+        >
+          <AppLogo />
+        </a>
+      </RouterLink>
       <button
+        data-test="burger"
         class="header__nav-trigger"
         @click="toggleHamburgerMenu"
       >
         🍔
       </button>
       <nav
+        data-test="nav"
         class="header__nav"
         :class="{
           'is-visible': isVisible
@@ -55,6 +59,7 @@
     methods: {
       toggleHamburgerMenu() {
         this.isVisible = !this.isVisible;
+        this.$emit('navToggled', this.isVisible)
       }
     }
   }

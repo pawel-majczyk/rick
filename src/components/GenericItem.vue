@@ -1,25 +1,34 @@
 <template>
-  <div class="base-item">
+  <div
+    class="base-item"
+  >
     <header class="base-item__header">
       <img
         v-if="image"
         :src="image"
         class="base-item__img"
+        data-test="image"
       >
       <div class="base-item__header-content">
         <h3
+          data-test="title"
           class="base-item__title"
         >
           {{ title }}
         </h3>
         <span
           class="base-item__subtitle"
+          data-test="subtitle"
         >
           {{ subtitle }}
         </span>
       </div>
     </header>
-    <slot />
+    <div
+      data-test="content"
+    >
+      <slot />
+    </div>
   </div>
 </template>
 
