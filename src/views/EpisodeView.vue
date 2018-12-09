@@ -89,7 +89,7 @@
               :title="comment.author"
               :subtitle="comment.created | timeDistanceToNow"
             >
-            {{ comment.content }}
+              {{ comment.content }}
             </GenericItem>
             <!--  -->
           </div>
