@@ -10,10 +10,7 @@
       {{ seasonBadge }}
     </span>
 
-  <!-- optional info -->
-  <!-- <div class="episode-info">
-    <span class="episode-info__label">Air date</span>
-    <span class="episode-info__value">December 2, 2013</span> -->
+    <slot />
   </div>
 </template>
 
@@ -39,7 +36,7 @@
         return `Season: ${extractEpisodeNumber(this.episode.episode).seasonNumber}`
       },
       episodeBadge() {
-        return `Season: ${extractEpisodeNumber(this.episode.episode).episodeNumber}`
+        return `Episode: ${extractEpisodeNumber(this.episode.episode).episodeNumber}`
       }
     }
   }
