@@ -5,7 +5,7 @@
       href="/"
       class="go-back-link"
     >
-      <BackArrow /> Search results
+      <IconBackArrow /> Search results
     </a>
 
     <div class="episode__content">
@@ -40,7 +40,11 @@
             v-for="character in charactersListFiltered"
             :key="character.id"
           >
-            <CharacterItem :character="character" />
+            <GenericItem
+              :title="character.name"
+              :subtitle="character | extractCharacterBrief"
+              :image="character.image"
+            />
           </div>
           <div class="link-container">
             <button
@@ -55,7 +59,35 @@
 
       <div class="episode__right-col">
         <h2>Comments</h2>
-      <!-- Comments -->
+        <section class="comments">
+          <GenericItem>
+            <form class="comments__form">
+              <textarea placeholder="Your comment here" />
+              <div class="comments__bar">
+                <input
+                  type="text"
+                  placeholder="Username"
+                >
+                <button type="submit">
+                  <IconPlusSign />
+                </button>
+              </div>
+            </form>
+          </GenericItem>
+          <!-- Comments -->
+          <div
+            v-for="comment in comments"
+            :key="comment.id"
+          >
+            <GenericItem
+              :title="comment.author"
+              :subtitle="comment.created | timeDistanceToNow"
+            >
+              Someinfo
+            </GenericItem>
+            <!--  -->
+          </div>
+        </section>
       </div>
     </div>
   </div>
@@ -63,13 +95,14 @@
 
 <script>
 import EpisodeItem from '@/components/EpisodeItem.vue'
-import CharacterItem from '@/components/CharacterItem.vue'
-import BackArrow from '@/assets/icon-arrow-left.svg';
+import GenericItem from '@/components/GenericItem.vue'
+import IconBackArrow from '@/assets/icon-arrow-left.svg';
+import IconPlusSign from '../assets/icon-add.svg';
 
 
   export default {
     components: {
-      EpisodeItem, BackArrow, CharacterItem
+      EpisodeItem, GenericItem, IconBackArrow, IconPlusSign
     },
     props: {
       id: {
@@ -83,6 +116,7 @@ import BackArrow from '@/assets/icon-arrow-left.svg';
         isLoading: true,
         charactersList: [],
         charactersListExpanded: false,
+        comments: [],
       }
     },
     computed: {
@@ -100,6 +134,7 @@ import BackArrow from '@/assets/icon-arrow-left.svg';
     async created() {
       await this.retrieveAPIData();
       await this.retrieveCharacters();
+      await this.retrieveComments();
     },
     methods: {
       async retrieveAPIData() {
@@ -110,6 +145,11 @@ import BackArrow from '@/assets/icon-arrow-left.svg';
       async retrieveCharacters() {
         this.charactersList = await fetch(`http://tiny-rick.tk/api/character/${this.characters}`)
           .then(response => response.json());
+      },
+      async retrieveComments() {
+        this.comments = await fetch(`http://tiny-rick.tk/api/episode/${this.id}/comments`)
+          .then(response => response.json())
+          .then(data => data.results);
       },
     }
   }

@@ -8,7 +8,7 @@
       Episodes
     </h1>
     <div class="episodes__search">
-      <!-- search icon -->
+      <SearchIcon />
       <input
         v-model="searchInput"
         type="text"
@@ -25,7 +25,16 @@
           <EpisodeItem :episode="episode" />
         </RouterLink>
       </li>
-      <!-- ... -->
+
+      <form class="comments__form">
+        <textarea placeholder="Your comment here"></textarea>
+        <div class="comments__bar">
+          <input type="text" placeholder="Username">
+          <button type="submit">
+            <!-- Plus Icon -->
+          </button>
+        </div>
+      </form>
     </ul>
     <div
       v-show="hasNextPage"
@@ -38,11 +47,12 @@
 
 <script>
 import EpisodeItem from '@/components/EpisodeItem.vue';
+import SearchIcon from '@/assets/icon-search.svg';
 import debounce from 'lodash.debounce';
 
   export default {
     components: {
-      EpisodeItem
+      EpisodeItem, SearchIcon
     },
     data() {
       return {
@@ -69,7 +79,7 @@ import debounce from 'lodash.debounce';
         this.currentPage++
 
         try {
-          const data = await fetch(`${this.urlAPI}/episode?page=${this.currentPage}&name=${this.searchInput}`)
+           const data = await fetch(`${this.urlAPI}/episode?page=${this.currentPage}&name=${this.searchInput}`)
             .then(response => response.json());
 
           if (data.info.pages === this.currentPage) {
