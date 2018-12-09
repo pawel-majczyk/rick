@@ -25,16 +25,6 @@
           <EpisodeItem :episode="episode" />
         </RouterLink>
       </li>
-
-      <form class="comments__form">
-        <textarea placeholder="Your comment here"></textarea>
-        <div class="comments__bar">
-          <input type="text" placeholder="Username">
-          <button type="submit">
-            <!-- Plus Icon -->
-          </button>
-        </div>
-      </form>
     </ul>
     <div
       v-show="hasNextPage"
