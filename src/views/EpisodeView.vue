@@ -62,19 +62,25 @@
         <section class="comments">
           <GenericItem>
             <form class="comments__form">
-              <textarea placeholder="Your comment here" />
+              <textarea
+                v-model="newCommentContent"
+                placeholder="Your comment here"
+              />
               <div class="comments__bar">
                 <input
+                  v-model="newCommentAuthor"
                   type="text"
                   placeholder="Username"
                 >
-                <button type="submit">
+                <button
+                  type="submit"
+                  @click.prevent="newCommentSubmit"
+                >
                   <IconPlusSign />
                 </button>
               </div>
             </form>
           </GenericItem>
-          <!-- Comments -->
           <div
             v-for="comment in comments"
             :key="comment.id"
@@ -83,7 +89,7 @@
               :title="comment.author"
               :subtitle="comment.created | timeDistanceToNow"
             >
-              Someinfo
+            {{ comment.content }}
             </GenericItem>
             <!--  -->
           </div>
@@ -117,6 +123,8 @@ import IconPlusSign from '../assets/icon-add.svg';
         charactersList: [],
         charactersListExpanded: false,
         comments: [],
+        newCommentContent: '',
+        newCommentAuthor: '',
       }
     },
     computed: {
@@ -151,6 +159,19 @@ import IconPlusSign from '../assets/icon-add.svg';
           .then(response => response.json())
           .then(data => data.results);
       },
+      newCommentSubmit() {
+        const payload = {
+          content: this.newCommentContent,
+          author: this.newCommentAuthor,
+        };
+        fetch(`http://tiny-rick.tk/api/episode/${this.id}/comments`,
+          { method: 'POST',
+            headers: { "Content-Type": "application/json; charset=utf-8" },
+            body: JSON.stringify(payload)
+          })
+          .then(response => response.json())
+          .then(data => this.comments = [data, ...this.comments])
+      }
     }
   }
 </script>
