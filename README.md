@@ -1,4 +1,14 @@
 # rick
+***Warning*** - code here is a bit differend than an example posted by workshop host.
+
+_Way worse in fact._
+
+If you're looking for decent implementation, head there: https://github.com/netguru-code-college/tiny-rick
+
+### why is it here?
+I've tried to apply new knowledge as it comes and not copy from examples. I am aware of my bad decisions, yet I wanted to keep it posted just to have a galnce at my progress over time.
+
+---
 
 ## Project setup
 ```
